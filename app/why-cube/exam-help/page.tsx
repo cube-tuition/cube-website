@@ -74,10 +74,10 @@ function DropInScheduleMockup() {
 
 function HowItWorksMockup() {
   const steps = [
-    { num: 1, title: 'Walk in',         sub: 'No booking needed' },
-    { num: 2, title: 'Sign the sheet',  sub: 'Subject + question' },
-    { num: 3, title: 'Get matched',     sub: 'With a free tutor' },
-    { num: 4, title: 'Work it out',     sub: 'Stay as long as you need' },
+    { num: 1, title: 'Browse slots',   sub: 'In your student portal' },
+    { num: 2, title: 'Book a slot',    sub: 'Pick a time + your question' },
+    { num: 3, title: 'Walk in',        sub: 'At your booked time' },
+    { num: 4, title: 'Get unstuck',    sub: 'Tutor briefed and ready' },
   ]
   return (
     <div className="bg-white rounded-2xl border border-[#DEE7FF] p-6 shadow-sm w-full">
@@ -100,13 +100,13 @@ function HowItWorksMockup() {
           </div>
         ))}
       </div>
-      <div className="mt-5 bg-[#EEF2FF] rounded-xl p-3 border border-[#DEE7FF]">
-        <p className="text-[10px] tracking-[0.15em] uppercase text-[#325099] font-semibold mb-1">
-          Bring with you
+      <div className="mt-5 bg-[#FEF3C7] rounded-xl p-3 border border-[#FDE68A]">
+        <p className="text-[10px] tracking-[0.15em] uppercase text-[#92400E] font-semibold mb-1">
+          Booking window
         </p>
-        <p className="text-xs text-[#364466]/70 leading-relaxed">
-          Any past paper, school assessment, or practice question you’re stuck on
-          — even from a different tutor or textbook.
+        <p className="text-xs text-[#92400E]/80 leading-relaxed">
+          Bookings close 24 hours before each slot starts — so tutors have time
+          to prep around the questions coming in.
         </p>
       </div>
     </div>
@@ -163,20 +163,21 @@ export default function ExamHelpPage() {
                 className="text-2xl md:text-3xl font-light text-[#364466] mb-5 leading-snug"
                 style={{ fontFamily: 'var(--font-outfit)' }}
               >
-                Walk in, get unstuck, walk out
+                Book a slot, walk in, get unstuck
               </h2>
               <p className="text-gray-500 text-sm leading-relaxed mb-6">
-                Drop-ins are open format — no booking, no curriculum, no pressure.
-                Bring any question you’re stuck on (school homework, past paper,
-                practice questions from anywhere) and one of our tutors will work
-                through it with you one-on-one.
+                Every drop-in session is listed in your student portal. Pick a
+                slot, note down what you need help with (a past paper, a homework
+                question, anything), and walk in at your booked time — your
+                tutor will already be briefed on what you’re bringing. Bookings
+                close 24 hours before each slot.
               </p>
               <ul className="space-y-2">
                 {[
                   'Free for every current CUBE student',
-                  'No booking required — just turn up',
-                  'Bring any past paper or school assessment',
-                  'Multiple tutors on site covering different subjects',
+                  'Book your slot in the student portal',
+                  'Add your question so the tutor can prep',
+                  'Bookings close 24 hours before the slot',
                 ].map(p => (
                   <li key={p} className="flex items-start gap-2 text-sm text-gray-500">
                     <span className="text-[#325099] mt-0.5">✓</span>

@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import CtaBanner from '@/components/CtaBanner'
 import LocationSection from '@/components/LocationSection'
-import TestimonialSection from '@/components/TestimonialSection'
+// import TestimonialSection from '@/components/TestimonialSection' // disabled — re-enable when ready
 import Differentiators from '@/components/Differentiators'
 
 export default function Home() {
@@ -83,7 +83,8 @@ export default function Home() {
 
       <LocationSection />
 
-      <TestimonialSection />
+      {/* Testimonials — disabled for now. To re-enable: (1) uncomment the import at the top, (2) uncomment the line below. */}
+      {/* <TestimonialSection /> */}
 
       <CtaBanner />
     </main>

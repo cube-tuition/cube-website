@@ -130,7 +130,7 @@ export default function ProgressReportsPage() {
     <main>
       <WhyCubeHero
         tagline="Progress Tracking & Analytics"
-        heading="Clear progress reporting, every term"
+        heading="Progress Reporting & Analytics, Every Term"
         description="Every CUBE student gets detailed reports, performance analytics, and a personal portal — so learning never stops outside the classroom."
       />
 
@@ -237,7 +237,7 @@ export default function ProgressReportsPage() {
                 {[
                   'Access homework and workbooks online',
                   'View upcoming class schedules',
-                  'Download past reports and exams',
+                  'View past reports and exams',
                   'Message your tutor directly',
                 ].map(p => (
                   <li key={p} className="flex items-start gap-2 text-sm text-gray-500">

@@ -187,9 +187,9 @@ const rows: Differentiator[] = [
   {
     id: 'progress',
     tagline: 'Progress Tracking & Analytics',
-    heading: 'See exactly how much improvement is happening',
+    heading: 'Reports + Student Portal',
     description:
-      'Detailed term reports, weekly quiz tracking, and visual progress dashboards so students and parents always know where they stand.',
+      'Detailed term reports, weekly quiz tracking, and visual progress dashboards in an easy to access portal so students and parents always know where they stand.',
     href: '/why-cube/progress-reports',
     Mockup: ProgressMockup,
   },

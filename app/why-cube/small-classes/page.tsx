@@ -66,7 +66,7 @@ function ClassroomMockup() {
         <p className="text-[10px] tracking-[0.18em] uppercase text-[#325099]/70 font-semibold mb-1">
           Class cap
         </p>
-        <p className="text-base font-bold text-[#364466]">3 – 7 students</p>
+        <p className="text-base font-bold text-[#364466]">7 students</p>
       </div>
     </div>
   )
