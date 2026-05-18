@@ -52,6 +52,11 @@ const features = [
   },
 ]
 
+export const metadata = {
+  title: '2 Week Free Trial | CUBE Tuition',
+  description: 'HSC Maths tutoring in Chatswood. Small classes, expert tutors, detailed progress reports.',
+}
+
 export default function FreeTrialPage() {
   return (
     <main>
