@@ -4,7 +4,7 @@ import { term } from '@/lib/timetable'
 export const metadata = {
   title: 'Timetable — CUBE Tuition',
   description:
-    'CUBE Tuition Term 2 2026 timetable. Browse all Maths, English and Science classes for Years 5–12 by day and subject.',
+    'CUBE Tuition Term 2 2026 timetable. Browse every Maths, English and Science class for Years 5–12 — filter by year, subject or day, and tap any class to book a free trial.',
 }
 
 export default function TimetablePage() {

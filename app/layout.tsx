@@ -8,8 +8,8 @@ const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
 const outfit = Outfit({ subsets: ['latin'], variable: '--font-outfit' })
 
 export const metadata: Metadata = {
-  title: 'CUBE Tuition: Year 5-12 Tutoring in Sydney',
-  description: 'CUBE Tuition provides tailored English, Maths, and Science tutoring for Years 5-12 in Chatswood, Sydney.',
+  title: 'CUBE Tuition — Year 5-12 Tutoring in Chatswood, Sydney',
+  description: 'Small-group Maths, English and Science tutoring for Years 5–12 in Chatswood. Classes capped at 7, custom workbooks, progress tracking and free exam help drop-ins included.',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

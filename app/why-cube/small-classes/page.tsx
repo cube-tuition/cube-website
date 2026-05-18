@@ -5,7 +5,7 @@ import CtaBanner from '@/components/CtaBanner'
 export const metadata = {
   title: 'Small Classes — CUBE Tuition',
   description:
-    'Every CUBE class is capped at 7 students, so every student gets direct teacher attention. Lessons adapt to each student\'s pace, gaps, and goals.',
+    'Every CUBE class is capped at 7 students — big enough for healthy peer discussion, small enough for the tutor to know exactly where every student is up to.',
 }
 
 // ── Mockups ─────────────────────────────────────────────────────────────────

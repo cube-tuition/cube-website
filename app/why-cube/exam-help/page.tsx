@@ -5,7 +5,7 @@ import CtaBanner from '@/components/CtaBanner'
 export const metadata = {
   title: 'Exam Help Drop-in Sessions — CUBE Tuition',
   description:
-    'Free drop-in exam help sessions for all CUBE students. Walk in any time during exam weeks — bring any question, get one-on-one help from a tutor.',
+    'Free exam help drop-in sessions for every CUBE student. Book a slot in your student portal, tell us what you need help with, and walk in for one-on-one tutor support.',
 }
 
 // ── Mockups ─────────────────────────────────────────────────────────────────

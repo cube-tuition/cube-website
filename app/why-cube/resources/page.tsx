@@ -5,7 +5,7 @@ import CtaBanner from '@/components/CtaBanner'
 export const metadata = {
   title: 'Extensive Resources — CUBE Tuition',
   description:
-    'Custom workbooks, weekly revision quizzes, mid-term and end-of-term exams, plus extra practice sets with worked solutions — all included in every CUBE course.',
+    'Custom in-house workbooks, weekly revision quizzes, mid-term and end-of-term exams, plus 300+ practice questions with worked solutions — all included in every CUBE course.',
 }
 
 // ── Mockups ─────────────────────────────────────────────────────────────────

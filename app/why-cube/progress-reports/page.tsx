@@ -5,7 +5,7 @@ import CtaBanner from '@/components/CtaBanner'
 export const metadata = {
   title: 'Progress Reports & Analytics — CUBE Tuition',
   description:
-    'Detailed term reports, weekly quiz tracking, and a personal student portal so students and parents always know how much improvement is happening.',
+    'Detailed term reports, weekly quiz tracking and visual progress dashboards — every CUBE student and parent sees exactly where they stand and what to focus on next.',
 }
 
 // ── Mockups (moved from former homepage section) ───────────────────────────

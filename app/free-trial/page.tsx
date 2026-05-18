@@ -53,8 +53,8 @@ const features = [
 ]
 
 export const metadata = {
-  title: '2 Week Free Trial | CUBE Tuition',
-  description: 'HSC Maths tutoring in Chatswood. Small classes, expert tutors, detailed progress reports.',
+  title: '2 Week Free Trial — CUBE Tuition',
+  description: 'Try CUBE Tuition free for 2 weeks. Maths, English and Science tutoring in Chatswood with small classes capped at 7 — no payment required if it’s not for you.',
 }
 
 export default function FreeTrialPage() {
