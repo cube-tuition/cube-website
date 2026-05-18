@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 
 const years = ['5', '6', '7', '8', '9', '10', '11', '12']
 
@@ -36,11 +37,15 @@ export default function Navbar() {
     <nav className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-100">
       <div className="max-w-7xl mx-auto px-6 md:px-10 py-5 flex items-center justify-between">
         {/* Logo */}
-        <Link
-          href="/"
-          className="text-2xl md:text-3xl font-bold tracking-tight text-[#062E63]"
-        >
-          CUBE Tuition
+        <Link href="/" className="flex items-center gap-3" style={{fontFamily: 'var(--font-outfit)'}}>
+          <Image
+            src="/logo.svg"
+            alt="CUBE Tuition Logo"
+            width={40}
+            height={40}
+            className="object-contain"
+          />
+          <span className="text-2xl font-bold text-cube-navy">CUBE Tuition</span>
         </Link>
 
         {/* Desktop Nav */}
