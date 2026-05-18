@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
 
 const years = ['5', '6', '7', '8', '9', '10', '11', '12']
 
@@ -38,7 +37,7 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-6 md:px-10 py-5 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-3" style={{fontFamily: 'var(--font-outfit)'}}>
-          <Image
+          <img
             src="/logo.svg"
             alt="CUBE Tuition Logo"
             width={40}
