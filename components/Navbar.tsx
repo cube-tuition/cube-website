@@ -38,7 +38,7 @@ export default function Navbar() {
         {/* Logo */}
         <Link href="/" className="flex items-center gap-3" style={{fontFamily: 'var(--font-outfit)'}}>
           <img
-            src="/logo.svg"
+            src="/Logo.svg"
             alt="CUBE Tuition Logo"
             width={40}
             height={40}
