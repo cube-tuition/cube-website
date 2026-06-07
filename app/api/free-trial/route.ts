@@ -29,6 +29,23 @@ export async function POST(req: Request) {
     notes?: string
   }
 
+  // Forward submission to portal (non-fatal)
+  const portalUrl = process.env.PORTAL_URL ?? 'https://portal.cubetuition.com.au'
+  try {
+    await fetch(`${portalUrl}/api/trial-submission`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        year, subjects, availability,
+        studentFirstName, studentLastName, studentEmail, studentPhone, school, referredBy,
+        parentFirstName, parentLastName, relationship, parentEmail, parentPhone,
+        notes,
+      }),
+    })
+  } catch (err) {
+    console.error('[free-trial] Portal save failed (non-fatal):', err)
+  }
+
   // Render availability grouped by day, in calendar order.
   const availabilityHtml = (() => {
     if (!availability || Object.keys(availability).length === 0) {
