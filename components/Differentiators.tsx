@@ -2,40 +2,72 @@ import Link from 'next/link'
 
 // ── Compact mockups ──────────────────────────────────────────────────────────
 
+// Faithful replica of the student portal's Results & Analytics page
+// (course tabs → stat strip → Weekly Tracker table), with sample data.
 function ProgressMockup() {
-  const weeks = [42, 55, 51, 68, 63, 74, 71, 82, 79, 88]
-  const max = 100
-  const h = 64
+  const rows = [
+    { week: 6, att: 'Present', score: '17 / 20', pct: 85, hw: 'A' },
+    { week: 7, att: 'Present', score: '15 / 20', pct: 75, hw: 'B' },
+    { week: 8, att: 'Present', score: '18 / 20', pct: 90, hw: 'A' },
+  ]
+  const hwColor: Record<string, string> = { A: 'bg-[#D1FAE5] text-[#065F46]', B: 'bg-[#DEF7FF] text-[#0E5E74]' }
   return (
-    <div className="bg-white rounded-2xl border border-[#DEE7FF] p-5 shadow-sm w-full">
-      <div className="flex items-center justify-between mb-4">
-        <div>
-          <p className="text-[10px] tracking-[0.2em] uppercase text-[#325099] font-semibold">
-            Term 2 Progress
+    <div className="bg-white rounded-2xl border border-[#DEE7FF] shadow-sm w-full overflow-hidden">
+      {/* Page header */}
+      <div className="px-5 pt-4 pb-3 border-b border-[#DEE7FF] bg-[#F8FAFF]">
+        <div className="flex items-center justify-between">
+          <p className="text-[9px] tracking-[0.25em] uppercase text-[#325099] font-semibold">
+            How you&rsquo;re tracking
           </p>
-          <p className="text-sm font-semibold text-[#364466] mt-0.5">Maths Advanced</p>
+          <span className="inline-flex items-center gap-1 text-[9px] font-semibold text-[#062E63] bg-white border border-[#DEE7FF] px-2 py-0.5 rounded-full">
+            <span className="w-1 h-1 rounded-full bg-[#325099]" /> Term 2 2026
+          </span>
         </div>
-        <div className="bg-[#EEF2FF] rounded-xl px-3 py-1.5 text-center">
-          <p className="text-[9px] text-[#325099] font-semibold">Improvement</p>
-          <p className="text-base font-bold text-[#364466]">+23%</p>
+        {/* Course tabs */}
+        <div className="flex gap-1.5 mt-2.5">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-semibold bg-[#DEE7FF] text-[#325099] border border-[#325099]/40">
+            <span className="w-1 h-1 rounded-full bg-[#325099]" /> Y9 Maths
+          </span>
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-semibold bg-white text-[#364466]/60 border border-[#DEE7FF]">
+            <span className="w-1 h-1 rounded-full bg-[#9D174D]" /> Y9 English
+          </span>
         </div>
       </div>
-      <p className="text-[10px] tracking-[0.18em] uppercase text-[#325099]/70 font-semibold mb-2">
-        Score trend
-      </p>
-      <div className="flex items-end gap-1" style={{ height: h + 14 }}>
-        {weeks.map((v, i) => (
-          <div key={i} className="flex-1 flex flex-col items-center gap-1">
-            <div
-              className="w-full rounded-t-md"
-              style={{
-                height: (v / max) * h,
-                background: i === weeks.length - 1 ? '#364466' : '#DEE7FF',
-              }}
-            />
-            <span className="text-[8px] text-[#364466]/40 font-medium">W{i + 1}</span>
+      {/* Stat strip */}
+      <div className="grid grid-cols-3 gap-2 px-5 py-3">
+        {[
+          ['Quiz average', '84%', '8 quizzes'],
+          ['Homework', 'A', 'Most recent'],
+          ['Attendance', '95%', '19/20 sessions'],
+        ].map(([label, value, sub]) => (
+          <div key={label} className="bg-[#F8FAFF] border border-[#DEE7FF] rounded-xl px-2.5 py-2">
+            <p className="text-[8px] tracking-[0.15em] uppercase text-[#325099]/70 font-semibold">{label}</p>
+            <p className="text-base font-bold text-[#364466] leading-tight">{value}</p>
+            <p className="text-[8px] text-[#364466]/45">{sub}</p>
           </div>
         ))}
+      </div>
+      {/* Weekly tracker table */}
+      <div className="px-5 pb-4">
+        <p className="text-[9px] tracking-[0.2em] uppercase text-[#325099]/70 font-semibold mb-1.5">Weekly Tracker</p>
+        <div className="border border-[#DEE7FF] rounded-xl overflow-hidden">
+          <div className="grid grid-cols-[2rem_4rem_1fr_2.5rem_2rem] gap-2 items-center bg-[#F8FAFF] border-b border-[#DEE7FF] px-3 py-1.5">
+            {['Wk', 'Attend.', 'Progress', '%', 'HW'].map(h => (
+              <span key={h} className="text-[8px] tracking-[0.15em] uppercase font-semibold text-[#325099]">{h}</span>
+            ))}
+          </div>
+          {rows.map(r => (
+            <div key={r.week} className="grid grid-cols-[2rem_4rem_1fr_2.5rem_2rem] gap-2 items-center px-3 py-2 border-b last:border-0 border-[#DEE7FF]">
+              <span className="text-[11px] font-medium text-[#2A2035]">{r.week}</span>
+              <span className="inline-flex justify-center text-[8px] font-semibold px-1.5 py-0.5 rounded-full bg-[#D1FAE5] text-[#065F46]">{r.att}</span>
+              <div className="w-full rounded-full h-1.5 bg-[#DEE7FF]">
+                <div className="h-1.5 rounded-full bg-[#325099]" style={{ width: `${r.pct}%` }} />
+              </div>
+              <span className="text-[11px] font-semibold text-[#2A2035] tabular-nums">{r.pct}%</span>
+              <span className={`inline-flex justify-center text-[8px] font-bold px-1.5 py-0.5 rounded-full ${hwColor[r.hw]}`}>{r.hw}</span>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   )
@@ -77,96 +109,107 @@ function ResourcesMockup() {
   )
 }
 
+// Faithful replica of the portal's class page (header chips + roster),
+// with sample students. 6 of 7 seats filled.
 function SmallClassesMockup() {
   const students = [
-    { initials: 'JL', color: 'bg-[#DEE7FF] text-[#325099]' },
-    { initials: 'SM', color: 'bg-[#FCE7F3] text-[#9D174D]' },
-    { initials: 'AC', color: 'bg-[#D1FAE5] text-[#065F46]' },
-    { initials: 'RP', color: 'bg-[#FEF3C7] text-[#92400E]' },
-    { initials: 'KW', color: 'bg-[#EDE9FE] text-[#5B21B6]' },
+    { name: 'Mia K.',    initials: 'MK', color: 'bg-[#DEE7FF] text-[#325099]' },
+    { name: 'Ethan L.',  initials: 'EL', color: 'bg-[#FCE7F3] text-[#9D174D]' },
+    { name: 'Aria C.',   initials: 'AC', color: 'bg-[#D1FAE5] text-[#065F46]' },
+    { name: 'Ryan P.',   initials: 'RP', color: 'bg-[#FEF3C7] text-[#92400E]' },
+    { name: 'Chloe S.',  initials: 'CS', color: 'bg-[#EDE9FE] text-[#5B21B6]' },
+    { name: 'Daniel W.', initials: 'DW', color: 'bg-[#DEF7FF] text-[#0E5E74]' },
   ]
   return (
-    <div className="bg-white rounded-2xl border border-[#DEE7FF] p-6 shadow-sm w-full">
-      <div className="flex items-center justify-between mb-5">
-        <p className="text-[10px] tracking-[0.2em] uppercase text-[#325099] font-semibold">
-          Year 11 Maths Adv
-        </p>
-        <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[#DEE7FF] text-[#325099]">
-          5 / 7 enrolled
-        </span>
-      </div>
-
-      {/* Teacher */}
-      <div className="flex flex-col items-center mb-5">
-        <div className="w-14 h-14 rounded-full bg-[#364466] flex items-center justify-center text-white text-sm font-bold mb-2 ring-4 ring-[#DEE7FF]">
-          MC
+    <div className="bg-white rounded-2xl border border-[#DEE7FF] shadow-sm w-full overflow-hidden">
+      {/* Class header — mirrors the portal class page */}
+      <div className="px-5 pt-4 pb-3.5 border-b border-[#DEE7FF] bg-[#F8FAFF]">
+        <div className="flex items-center justify-between mb-1.5">
+          <p className="text-[9px] tracking-[0.25em] uppercase text-[#325099] font-semibold">Class</p>
+          <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[#DEE7FF] text-[#325099]">
+            6 / 7 enrolled
+          </span>
         </div>
-        <p className="text-xs font-semibold text-[#364466]">Mr Chen</p>
-        <p className="text-[10px] text-[#325099]/60">Lead Tutor</p>
+        <p className="text-base font-bold text-[#062E63]">Y11 Maths Advanced</p>
+        <div className="flex flex-wrap gap-x-3 gap-y-1 mt-1.5 text-[10px] text-[#364466]/60">
+          <span>📅 Saturday</span>
+          <span>🕐 9:00 – 10:30am</span>
+          <span>📍 Room 2</span>
+          <span className="font-semibold text-[#325099]">Sally · Lead Tutor</span>
+        </div>
       </div>
-
-      {/* Students */}
-      <div className="flex justify-center gap-2 flex-wrap mb-4">
-        {students.map((s, i) => (
-          <div
-            key={i}
-            className={`w-10 h-10 rounded-full ${s.color} flex items-center justify-center text-[11px] font-semibold`}
-          >
-            {s.initials}
+      {/* Roster */}
+      <div className="px-5 py-4">
+        <p className="text-[9px] tracking-[0.2em] uppercase text-[#325099]/70 font-semibold mb-2">Roster</p>
+        <div className="space-y-1.5">
+          {students.map(s => (
+            <div key={s.initials} className="flex items-center gap-2.5 bg-[#F8FAFF] border border-[#DEE7FF] rounded-xl px-3 py-1.5">
+              <span className={`w-7 h-7 rounded-full ${s.color} flex items-center justify-center text-[9px] font-bold shrink-0`}>
+                {s.initials}
+              </span>
+              <span className="text-[11px] font-semibold text-[#364466]">{s.name}</span>
+              <span className="ml-auto text-[8px] font-semibold px-1.5 py-0.5 rounded-full bg-[#D1FAE5] text-[#065F46]">enrolled</span>
+            </div>
+          ))}
+          <div className="flex items-center justify-center gap-2 border-2 border-dashed border-[#BACBFF] rounded-xl px-3 py-2">
+            <span className="text-[10px] font-semibold text-[#325099]/70">1 spot left — capped at 7</span>
           </div>
-        ))}
-        <div className="w-10 h-10 rounded-full bg-[#F4F7FF] border-2 border-dashed border-[#BACBFF] flex items-center justify-center text-[10px] text-[#325099]/60 font-semibold">
-          +2
         </div>
-      </div>
-
-      <div className="bg-[#F8FAFF] rounded-xl border border-[#DEE7FF] p-3 text-center">
-        <p className="text-[10px] tracking-[0.18em] uppercase text-[#325099]/70 font-semibold">
-          Class capped at
-        </p>
-        <p className="text-base font-bold text-[#364466]">7 students</p>
       </div>
     </div>
   )
 }
 
+// Faithful replica of the student drop-in booking page: session tile with
+// live capacity + the book-a-spot form (subject + question).
 function ExamHelpMockup() {
-  const slots = [
-    { day: 'Mon', time: '4 – 6pm', subject: 'Maths',     color: 'bg-[#DEE7FF] text-[#325099]' },
-    { day: 'Wed', time: '4 – 6pm', subject: 'English',   color: 'bg-[#FCE7F3] text-[#9D174D]' },
-    { day: 'Thu', time: '5 – 7pm', subject: 'Chemistry', color: 'bg-[#D1FAE5] text-[#065F46]' },
-    { day: 'Sat', time: '10 – 12pm', subject: 'Any',     color: 'bg-[#FEF3C7] text-[#92400E]' },
-  ]
   return (
-    <div className="bg-white rounded-2xl border border-[#DEE7FF] p-5 shadow-sm w-full">
-      <div className="flex items-center justify-between mb-4">
-        <p className="text-[10px] tracking-[0.2em] uppercase text-[#325099] font-semibold">
-          Exam Week · Drop-in
-        </p>
-        <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[#D1FAE5] text-[#065F46]">
-          Free
-        </span>
+    <div className="bg-white rounded-2xl border border-[#DEE7FF] shadow-sm w-full overflow-hidden">
+      <div className="px-5 pt-4 pb-3 border-b border-[#DEE7FF] bg-[#F8FAFF] flex items-center justify-between">
+        <p className="text-[9px] tracking-[0.25em] uppercase text-[#325099] font-semibold">Drop-in Booking</p>
+        <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[#D1FAE5] text-[#065F46]">Free</span>
       </div>
-      <div className="space-y-2">
-        {slots.map((s) => (
-          <div
-            key={s.day}
-            className="flex items-center gap-3 bg-[#F8FAFF] rounded-xl px-3.5 py-2.5 border border-[#DEE7FF]"
-          >
-            <div className="w-9 h-9 rounded-lg bg-white border border-[#DEE7FF] flex flex-col items-center justify-center">
-              <span className="text-[8px] tracking-wider uppercase text-[#325099]/60 font-semibold leading-none">
-                {s.day}
-              </span>
-            </div>
-            <div className="flex-1 min-w-0">
-              <p className="text-xs font-semibold text-[#364466]">{s.time}</p>
-              <p className="text-[10px] text-[#364466]/50">Walk-in welcome</p>
-            </div>
-            <span className={`text-[9px] font-semibold px-2 py-0.5 rounded-full ${s.color}`}>
-              {s.subject}
-            </span>
+
+      {/* Session tile */}
+      <div className="px-5 pt-4">
+        <div className="flex items-center gap-3 border border-[#DEE7FF] rounded-xl px-3.5 py-3 bg-[#F8FAFF]">
+          <div className="w-11 h-11 rounded-xl bg-white border border-[#DEE7FF] flex flex-col items-center justify-center shrink-0">
+            <span className="text-[7px] tracking-wider uppercase text-[#325099]/60 font-semibold leading-none">Thu</span>
+            <span className="text-base font-bold text-[#062E63] leading-tight">25</span>
           </div>
-        ))}
+          <div className="flex-1 min-w-0">
+            <p className="text-xs font-bold text-[#364466]">4:00 – 6:00pm</p>
+            <p className="text-[10px] text-[#364466]/55">📍 Chatswood centre · all subjects</p>
+          </div>
+          <span className="text-[9px] font-semibold px-2 py-0.5 rounded-full bg-[#DEE7FF] text-[#325099] shrink-0">
+            9 of 12 spots left
+          </span>
+        </div>
+      </div>
+
+      {/* Booking form */}
+      <div className="px-5 py-4">
+        <p className="text-[9px] tracking-[0.2em] uppercase text-[#325099]/70 font-semibold mb-2">Book a spot</p>
+        <div className="space-y-2">
+          <div>
+            <p className="text-[8px] font-semibold text-[#325099]/60 uppercase tracking-wide mb-1">Subject</p>
+            <div className="flex gap-1.5">
+              <span className="text-[10px] font-semibold px-2.5 py-1 rounded-full bg-[#062E63] text-white">Maths</span>
+              <span className="text-[10px] font-semibold px-2.5 py-1 rounded-full bg-white border border-[#DEE7FF] text-[#364466]/60">English</span>
+              <span className="text-[10px] font-semibold px-2.5 py-1 rounded-full bg-white border border-[#DEE7FF] text-[#364466]/60">Chemistry</span>
+            </div>
+          </div>
+          <div>
+            <p className="text-[8px] font-semibold text-[#325099]/60 uppercase tracking-wide mb-1">What do you need help with?</p>
+            <div className="border border-[#DEE7FF] rounded-xl px-3 py-2 bg-white">
+              <p className="text-[10px] text-[#364466]/75">Q7 from the trial paper — circle geometry proof</p>
+            </div>
+          </div>
+          <div className="rounded-xl bg-[#062E63] text-white text-center py-2 text-[11px] font-semibold">
+            Confirm booking →
+          </div>
+          <p className="text-[8px] text-[#364466]/40 text-center">Bring any questions, any materials — homework, school exams, anything.</p>
+        </div>
       </div>
     </div>
   )

@@ -57,6 +57,7 @@ type FormData = {
   studentPhone: string
   school: string
   referredBy: string
+  howHeard: string
   parentFirstName: string
   parentLastName: string
   relationship: string
@@ -64,6 +65,19 @@ type FormData = {
   parentPhone: string
   notes: string
 }
+
+// Keep in sync with cube-portal/lib/howHeard.js (HOW_HEARD_CHANNELS)
+const HOW_HEARD_OPTIONS = [
+  'Referral (friend / family)',
+  'Google Search',
+  'Google Maps',
+  'Social media',
+  'School word of mouth',
+  'Flyer / local advertising',
+  'Walked past',
+  'Returning family',
+  'Other',
+]
 
 export default function FreeTrialFormPage() {
   const [step, setStep] = useState(0)
@@ -78,6 +92,7 @@ export default function FreeTrialFormPage() {
     studentPhone: '',
     school: '',
     referredBy: '',
+    howHeard: '',
     parentFirstName: '',
     parentLastName: '',
     relationship: '',
@@ -425,12 +440,25 @@ export default function FreeTrialFormPage() {
                   onChange={e => setForm(f => ({ ...f, school: e.target.value }))}
                   className={inputClass}
                 />
-                <input
-                  placeholder="Referred by (optional)"
-                  value={form.referredBy}
-                  onChange={e => setForm(f => ({ ...f, referredBy: e.target.value }))}
-                  className={inputClass}
-                />
+                <select
+                  value={form.howHeard}
+                  onChange={e => setForm(f => ({ ...f, howHeard: e.target.value }))}
+                  className={`${inputClass} ${form.howHeard ? '' : 'text-[#364466]/40'}`}
+                >
+                  <option value="">How did you hear about us?</option>
+                  {HOW_HEARD_OPTIONS.map(o => <option key={o} value={o}>{o}</option>)}
+                </select>
+                <div>
+                  <input
+                    placeholder={form.howHeard === 'Referral (friend / family)' ? 'Who referred you? (you both get $50 off!)' : 'Referred by (optional)'}
+                    value={form.referredBy}
+                    onChange={e => setForm(f => ({ ...f, referredBy: e.target.value }))}
+                    className={inputClass}
+                  />
+                  {form.howHeard === 'Referral (friend / family)' && !form.referredBy && (
+                    <p className="text-[11px] text-[#364466]/50 mt-1 px-1">Tell us their name so both families receive the $50 referral discount.</p>
+                  )}
+                </div>
               </div>
 
               <div className="flex gap-3">

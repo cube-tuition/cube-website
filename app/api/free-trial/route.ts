@@ -8,7 +8,7 @@ const DAY_ORDER = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Satu
 export async function POST(req: Request) {
   const {
     year, subjects, availability,
-    studentFirstName, studentLastName, studentEmail, studentPhone, school, referredBy,
+    studentFirstName, studentLastName, studentEmail, studentPhone, school, referredBy, howHeard,
     parentFirstName, parentLastName, relationship, parentEmail, parentPhone,
     notes,
   } = (await req.json()) as {
@@ -21,6 +21,7 @@ export async function POST(req: Request) {
     studentPhone?: string
     school?: string
     referredBy?: string
+    howHeard?: string
     parentFirstName?: string
     parentLastName?: string
     relationship?: string
@@ -37,7 +38,7 @@ export async function POST(req: Request) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         year, subjects, availability,
-        studentFirstName, studentLastName, studentEmail, studentPhone, school, referredBy,
+        studentFirstName, studentLastName, studentEmail, studentPhone, school, referredBy, howHeard,
         parentFirstName, parentLastName, relationship, parentEmail, parentPhone,
         notes,
       }),
@@ -73,6 +74,7 @@ export async function POST(req: Request) {
         <p><strong>Year:</strong> ${year ?? 'Not provided'}</p>
         <p><strong>Subjects:</strong> ${(subjects ?? []).join(', ') || 'Not provided'}</p>
         <p><strong>School:</strong> ${school || 'Not provided'}</p>
+        <p><strong>How heard:</strong> ${howHeard || 'Not provided'}</p>
         <p><strong>Referred by:</strong> ${referredBy || 'Not provided'}</p>
 
         <h3>Availability</h3>
