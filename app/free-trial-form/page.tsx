@@ -448,17 +448,21 @@ export default function FreeTrialFormPage() {
                   <option value="">How did you hear about us?</option>
                   {HOW_HEARD_OPTIONS.map(o => <option key={o} value={o}>{o}</option>)}
                 </select>
-                <div>
-                  <input
-                    placeholder={form.howHeard === 'Referral (friend / family)' ? 'Who referred you? (you both get $50 off!)' : 'Referred by (optional)'}
-                    value={form.referredBy}
-                    onChange={e => setForm(f => ({ ...f, referredBy: e.target.value }))}
-                    className={inputClass}
-                  />
-                  {form.howHeard === 'Referral (friend / family)' && !form.referredBy && (
-                    <p className="text-[11px] text-[#364466]/50 mt-1 px-1">Tell us their name so both families receive the $50 referral discount.</p>
-                  )}
-                </div>
+                {/* Referred-by only appears when they chose Referral — keeps the
+                    form short while still capturing the $50 program's referrer name */}
+                {form.howHeard === 'Referral (friend / family)' && (
+                  <div>
+                    <input
+                      placeholder="Who referred you? (you both get $50 off!)"
+                      value={form.referredBy}
+                      onChange={e => setForm(f => ({ ...f, referredBy: e.target.value }))}
+                      className={inputClass}
+                    />
+                    {!form.referredBy && (
+                      <p className="text-[11px] text-[#364466]/50 mt-1 px-1">Tell us their name so both families receive the $50 referral discount.</p>
+                    )}
+                  </div>
+                )}
               </div>
 
               <div className="flex gap-3">

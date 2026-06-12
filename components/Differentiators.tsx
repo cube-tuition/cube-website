@@ -116,9 +116,9 @@ function SmallClassesMockup() {
     { name: 'Mia K.',    initials: 'MK', color: 'bg-[#DEE7FF] text-[#325099]' },
     { name: 'Ethan L.',  initials: 'EL', color: 'bg-[#FCE7F3] text-[#9D174D]' },
     { name: 'Aria C.',   initials: 'AC', color: 'bg-[#D1FAE5] text-[#065F46]' },
-    { name: 'Ryan P.',   initials: 'RP', color: 'bg-[#FEF3C7] text-[#92400E]' },
     { name: 'Chloe S.',  initials: 'CS', color: 'bg-[#EDE9FE] text-[#5B21B6]' },
-    { name: 'Daniel W.', initials: 'DW', color: 'bg-[#DEF7FF] text-[#0E5E74]' },
+    { name: 'Lucas W.',  initials: 'LW', color: 'bg-[#DEF7FF] text-[#0E5E74]' },
+    { name: 'Hannah J.', initials: 'HJ', color: 'bg-[#FEF3C7] text-[#92400E]' },
   ]
   return (
     <div className="bg-white rounded-2xl border border-[#DEE7FF] shadow-sm w-full overflow-hidden">
@@ -130,12 +130,12 @@ function SmallClassesMockup() {
             6 / 7 enrolled
           </span>
         </div>
-        <p className="text-base font-bold text-[#062E63]">Y11 Maths Advanced</p>
+        <p className="text-base font-bold text-[#062E63]">Y7 English</p>
         <div className="flex flex-wrap gap-x-3 gap-y-1 mt-1.5 text-[10px] text-[#364466]/60">
           <span>📅 Saturday</span>
-          <span>🕐 9:00 – 10:30am</span>
+          <span>🕐 11:00am – 12:30pm</span>
           <span>📍 Room 2</span>
-          <span className="font-semibold text-[#325099]">Sally · Lead Tutor</span>
+          <span className="font-semibold text-[#325099]">Daniel · Lead Tutor</span>
         </div>
       </div>
       {/* Roster */}
