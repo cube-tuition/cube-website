@@ -1,13 +1,17 @@
 import TimetableView from '@/components/TimetableView'
-import { term } from '@/lib/timetable'
+import { fetchTimetable } from '@/lib/timetable'
 
 export const metadata = {
   title: 'Timetable — CUBE Tuition',
   description:
-    'CUBE Tuition Term 2 2026 timetable. Browse every Maths, English and Science class for Years 5–12 — filter by year, subject or day, and tap any class to book a free trial.',
+    'CUBE Tuition timetable. Browse every Maths, English and Science class for Years 5–12 — filter by year, subject or day, and tap any class to book a free trial.',
 }
 
-export default function TimetablePage() {
+// Re-pull from the portal periodically so the term flips automatically by date.
+export const revalidate = 1800
+
+export default async function TimetablePage() {
+  const { term, classes } = await fetchTimetable()
   return (
     <main>
       {/* Hero */}
@@ -66,7 +70,7 @@ export default function TimetablePage() {
 
       {/* Timetable */}
       <section className="max-w-6xl mx-auto px-6 py-12 md:py-16">
-        <TimetableView />
+        <TimetableView classes={classes} />
       </section>
     </main>
   )

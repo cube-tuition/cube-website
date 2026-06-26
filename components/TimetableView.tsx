@@ -3,12 +3,11 @@
 import { useMemo, useState, useEffect } from 'react'
 import Link from 'next/link'
 import {
-  classes,
   days,
   dayFullName,
   formatTime,
-  gridStartMin,
-  gridEndMin,
+  gridStartMin as DEFAULT_GRID_START,
+  gridEndMin as DEFAULT_GRID_END,
   type ClassEntry,
   type Day,
   type Subject,
@@ -118,8 +117,6 @@ function layoutDay(items: ClassEntry[]): LaidOut[] {
 // ── Component ───────────────────────────────────────────────────────────────
 
 const HOUR_PX = 80
-const TOTAL_HOURS = (gridEndMin - gridStartMin) / 60
-const TOTAL_HEIGHT = TOTAL_HOURS * HOUR_PX
 
 const subjectOptions: Array<{ value: 'all' | Subject; label: string }> = [
   { value: 'all',     label: 'All subjects' },
@@ -135,11 +132,21 @@ const yearOptions: Array<{ value: 'all' | number; label: string }> = [
 
 type ViewMode = 'grid' | 'list'
 
-export default function TimetableView() {
+export default function TimetableView({ classes = [] }: { classes?: ClassEntry[] }) {
   const [subject, setSubject] = useState<'all' | Subject>('all')
   const [year, setYear] = useState<'all' | number>('all')
   const [view, setView] = useState<ViewMode>('grid')
   const [selected, setSelected] = useState<ClassEntry | null>(null)
+
+  // Grid bounds adapt to the classes shown, falling back to the default window.
+  const gridStartMin = useMemo(() => {
+    const mins = classes.map((c) => c.startMin)
+    return mins.length ? Math.min(DEFAULT_GRID_START, Math.floor(Math.min(...mins) / 60) * 60) : DEFAULT_GRID_START
+  }, [classes])
+  const gridEndMin = useMemo(() => {
+    const maxes = classes.map((c) => c.endMin)
+    return maxes.length ? Math.max(DEFAULT_GRID_END, Math.ceil(Math.max(...maxes) / 60) * 60) : DEFAULT_GRID_END
+  }, [classes])
 
   // Default to list view on small screens
   useEffect(() => {
@@ -154,7 +161,7 @@ export default function TimetableView() {
       if (year !== 'all' && c.yearLevel !== year) return false
       return true
     })
-  }, [subject, year])
+  }, [classes, subject, year])
 
   // Close modal on Escape
   useEffect(() => {
@@ -223,7 +230,7 @@ export default function TimetableView() {
       {filtered.length === 0 ? (
         <EmptyState onReset={() => { setSubject('all'); setYear('all') }} />
       ) : view === 'grid' ? (
-        <GridView items={filtered} onSelect={setSelected} />
+        <GridView items={filtered} onSelect={setSelected} gridStartMin={gridStartMin} gridEndMin={gridEndMin} />
       ) : (
         <ListView items={filtered} onSelect={setSelected} />
       )}
@@ -292,10 +299,15 @@ function FilterRow<T extends string | number>({
 function GridView({
   items,
   onSelect,
+  gridStartMin,
+  gridEndMin,
 }: {
   items: ClassEntry[]
   onSelect: (c: ClassEntry) => void
+  gridStartMin: number
+  gridEndMin: number
 }) {
+  const TOTAL_HEIGHT = ((gridEndMin - gridStartMin) / 60) * HOUR_PX
   const hours: number[] = []
   for (let h = gridStartMin / 60; h <= gridEndMin / 60; h++) hours.push(h)
 

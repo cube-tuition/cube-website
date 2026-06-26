@@ -21,8 +21,8 @@ export type ClassEntry = {
   endMin: number
   /** Human time label, e.g. "6:00pm – 8:00pm" */
   timeLabel: string
-  /** Course fee in AUD for the term */
-  price: number
+  /** Course fee in AUD for the term (omitted when no price is set) */
+  price?: number
   /** Delivery mode if specified */
   mode?: 'Online' | 'In Person'
 }
@@ -104,3 +104,183 @@ export const classes: ClassEntry[] = [
 /** Time range shown on the grid (11:00am – 8:00pm) */
 export const gridStartMin = t(11, 0)
 export const gridEndMin = t(20, 0)
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Dynamic timetable — pulled live from the CUBE portal database.
+//
+// The portal exposes a read-only, PII-free view (`website_timetable`) containing
+// only published terms and group classes. This page picks the term to display by
+// date (the current term until it ends, then the upcoming term) and converts the
+// rows into the ClassEntry shape the view component already renders. If anything
+// fails, it falls back to the hardcoded data above so the page never breaks.
+// ─────────────────────────────────────────────────────────────────────────────
+
+export type TermMeta = {
+  name: string
+  year: number
+  weeks: { week: number; dates: string }[]
+}
+export type TimetableData = { term: TermMeta; classes: ClassEntry[] }
+
+type Row = {
+  term_id: string
+  term_name: string | null
+  term_year: number | null
+  term_number: number | null
+  term_start: string
+  term_end: string
+  class_id: number
+  class_name: string | null
+  day_of_week: string | null
+  start_time: string | null
+  end_time: string | null
+  course_name: string | null
+  course_code: string | null
+  course_price: string | number | null
+  delivery_mode: string | null
+}
+
+const FALLBACK: TimetableData = { term, classes }
+
+const DAY_ABBR: Record<string, Day> = {
+  monday: 'Mon', tuesday: 'Tue', wednesday: 'Wed',
+  thursday: 'Thu', friday: 'Fri', saturday: 'Sat',
+}
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+
+function parseMins(hhmm: string | null): number | null {
+  if (!hhmm) return null
+  const m = String(hhmm).match(/^(\d{1,2}):(\d{2})/)
+  if (!m) return null
+  return parseInt(m[1], 10) * 60 + parseInt(m[2], 10)
+}
+
+/** Today's date (YYYY-MM-DD) in Sydney, so the term flips at local midnight. */
+function sydneyToday(): string {
+  return new Date().toLocaleDateString('en-CA', { timeZone: 'Australia/Sydney' })
+}
+
+function fmtDayMonth(d: Date): string {
+  return `${d.getDate()} ${MONTHS[d.getMonth()]}`
+}
+
+/** Build the week strip from the term's start/end dates. */
+function buildWeeks(startISO: string, endISO: string): { week: number; dates: string }[] {
+  const start = new Date(`${startISO}T00:00:00`)
+  const end = new Date(`${endISO}T00:00:00`)
+  const weeks: { week: number; dates: string }[] = []
+  const cur = new Date(start)
+  let n = 1
+  while (cur <= end && n < 30) {
+    const wEnd = new Date(cur)
+    wEnd.setDate(wEnd.getDate() + 6)
+    const shown = wEnd > end ? end : wEnd
+    weeks.push({ week: n, dates: `${fmtDayMonth(cur)} – ${fmtDayMonth(shown)}` })
+    cur.setDate(cur.getDate() + 7)
+    n += 1
+  }
+  return weeks
+}
+
+function detectSubject(name: string): { subject: Subject; subjectLabel: string } {
+  if (/chem/i.test(name)) return { subject: 'Science', subjectLabel: 'Chemistry' }
+  if (/science|phys|bio/i.test(name)) return { subject: 'Science', subjectLabel: 'Science' }
+  if (/eng|ealdd?|english/i.test(name)) return { subject: 'English', subjectLabel: 'English' }
+  return { subject: 'Maths', subjectLabel: 'Maths' }
+}
+
+function detectLevel(name: string): string | undefined {
+  if (/ext\s*2/i.test(name)) return 'Ext 2'
+  if (/ext\s*1/i.test(name)) return 'Ext 1'
+  if (/\badv(anced)?\b/i.test(name)) return 'Advanced'
+  if (/\bstd|standard\b/i.test(name)) return 'Standard'
+  if (/eald/i.test(name)) return 'EALD'
+  return undefined
+}
+
+/** "Y8 Maths Online" → "Year 8 Maths"; trims mode/1:1 markers. */
+function titleFor(name: string): string {
+  return name
+    .replace(/^Y(?:ear)?\s*(\d+)/i, 'Year $1')
+    .replace(/\s*\bonline\b/i, '')
+    .replace(/\s*1:1/g, '')
+    .replace(/\s{2,}/g, ' ')
+    .trim()
+}
+
+function rowToEntry(r: Row): ClassEntry | null {
+  const day = DAY_ABBR[(r.day_of_week || '').trim().toLowerCase()]
+  const startMin = parseMins(r.start_time)
+  const endMin = parseMins(r.end_time)
+  const name = r.class_name || r.course_name || 'Class'
+  if (!day || startMin == null || endMin == null || endMin <= startMin) return null
+  const { subject, subjectLabel } = detectSubject(name)
+  const yearMatch = name.match(/Y(?:ear)?\s*(\d+)/i)
+  const priceNum = r.course_price == null ? undefined : Number(r.course_price)
+  return {
+    id: `c-${r.class_id}`,
+    subject,
+    subjectLabel,
+    yearLevel: yearMatch ? parseInt(yearMatch[1], 10) : 0,
+    title: titleFor(name),
+    level: detectLevel(name),
+    day,
+    startMin,
+    endMin,
+    timeLabel: `${formatTime(startMin)} – ${formatTime(endMin)}`,
+    price: priceNum != null && !Number.isNaN(priceNum) ? priceNum : undefined,
+    mode: /online/i.test(name) ? 'Online' : undefined,
+  }
+}
+
+/**
+ * Fetch the live timetable. Returns the hardcoded fallback if env vars are
+ * missing or the request fails, so the page always renders something.
+ */
+export async function fetchTimetable(): Promise<TimetableData> {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  if (!url || !key) return FALLBACK
+  try {
+    const res = await fetch(`${url}/rest/v1/website_timetable?select=*`, {
+      headers: { apikey: key, Authorization: `Bearer ${key}` },
+      next: { revalidate: 1800 },
+    })
+    if (!res.ok) return FALLBACK
+    const rows = (await res.json()) as Row[]
+    if (!Array.isArray(rows) || rows.length === 0) return FALLBACK
+
+    // Choose the term to display: the earliest published term still running or
+    // upcoming (end date today or later); otherwise the most recent published one.
+    const today = sydneyToday()
+    const byTerm = new Map<string, Row[]>()
+    for (const r of rows) {
+      if (!byTerm.has(r.term_id)) byTerm.set(r.term_id, [])
+      byTerm.get(r.term_id)!.push(r)
+    }
+    const termsList = [...byTerm.values()].map((rs) => rs[0])
+    const future = termsList
+      .filter((t0) => t0.term_end >= today)
+      .sort((a, b) => a.term_end.localeCompare(b.term_end))
+    const past = [...termsList].sort((a, b) => b.term_end.localeCompare(a.term_end))
+    const chosen = future[0] || past[0]
+    if (!chosen) return FALLBACK
+
+    const entries = byTerm.get(chosen.term_id)!
+      .map(rowToEntry)
+      .filter((e): e is ClassEntry => e !== null)
+      .sort((a, b) => a.yearLevel - b.yearLevel || a.startMin - b.startMin)
+    if (entries.length === 0) return FALLBACK
+
+    return {
+      term: {
+        name: chosen.term_number ? `Term ${chosen.term_number}` : (chosen.term_name || 'Term'),
+        year: chosen.term_year || new Date().getFullYear(),
+        weeks: buildWeeks(chosen.term_start, chosen.term_end),
+      },
+      classes: entries,
+    }
+  } catch {
+    return FALLBACK
+  }
+}
