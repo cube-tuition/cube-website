@@ -472,7 +472,9 @@ function ListView({
                           {c.subjectLabel}
                         </p>
                       </div>
-                      <p className="text-sm font-bold text-[#364466] tabular-nums">${c.price}</p>
+                      {c.price != null && (
+                        <p className="text-sm font-bold text-[#364466] tabular-nums">${c.price}</p>
+                      )}
                     </div>
                     <p className="text-base font-semibold text-[#364466] leading-snug mb-1">
                       {c.title}
@@ -557,7 +559,7 @@ function DetailModal({ entry, onClose }: { entry: ClassEntry; onClose: () => voi
             <DetailItem label="Day" value={dayFullName[entry.day]} />
             <DetailItem label="Time" value={entry.timeLabel} />
             <DetailItem label="Term length" value="10 weeks" />
-            <DetailItem label="Course fee" value={`$${entry.price}`} />
+            <DetailItem label="Course fee" value={entry.price != null ? `$${entry.price}` : 'Contact us'} />
             {entry.level && <DetailItem label="Level" value={entry.level} />}
             {entry.mode && <DetailItem label="Mode" value={entry.mode} />}
           </div>

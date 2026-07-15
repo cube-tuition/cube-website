@@ -1,5 +1,6 @@
-// Term 2, 2026 timetable for CUBE Tuition.
-// Source: 2026 Term 2 Timetable + Pricing PDF.
+// Term 3, 2026 timetable for CUBE Tuition.
+// Fallback snapshot of the portal's website_timetable view (taken 15 Jul 2026);
+// the live page fetches fresh data and only uses this if the fetch fails.
 
 export type Subject = 'Maths' | 'English' | 'Science'
 export type Day = 'Mon' | 'Tue' | 'Wed' | 'Thu' | 'Fri' | 'Sat'
@@ -28,19 +29,19 @@ export type ClassEntry = {
 }
 
 export const term = {
-  name: 'Term 2',
+  name: 'Term 3',
   year: 2026,
   weeks: [
-    { week: 1,  dates: '20 Apr – 26 Apr' },
-    { week: 2,  dates: '27 Apr – 3 May' },
-    { week: 3,  dates: '4 May – 10 May' },
-    { week: 4,  dates: '11 May – 17 May' },
-    { week: 5,  dates: '18 May – 24 May' },
-    { week: 6,  dates: '25 May – 31 May' },
-    { week: 7,  dates: '1 Jun – 7 Jun' },
-    { week: 8,  dates: '8 Jun – 14 Jun' },
-    { week: 9,  dates: '15 Jun – 21 Jun' },
-    { week: 10, dates: '22 Jun – 28 Jun' },
+    { week: 1,  dates: '20 Jul – 26 Jul' },
+    { week: 2,  dates: '27 Jul – 2 Aug' },
+    { week: 3,  dates: '3 Aug – 9 Aug' },
+    { week: 4,  dates: '10 Aug – 16 Aug' },
+    { week: 5,  dates: '17 Aug – 23 Aug' },
+    { week: 6,  dates: '24 Aug – 30 Aug' },
+    { week: 7,  dates: '31 Aug – 6 Sep' },
+    { week: 8,  dates: '7 Sep – 13 Sep' },
+    { week: 9,  dates: '14 Sep – 20 Sep' },
+    { week: 10, dates: '21 Sep – 27 Sep' },
   ],
 }
 
@@ -68,37 +69,26 @@ const t = (h: number, m: number) => h * 60 + m
 
 export const classes: ClassEntry[] = [
   // ── Mathematics ─────────────────────────────────────────────────────────
-  { id: 'maths-y5',          subject: 'Maths', subjectLabel: 'Maths',   yearLevel: 5,  title: 'Year 5 Maths',                 day: 'Sat', startMin: t(15, 0), endMin: t(16, 30), timeLabel: '3:00pm – 4:30pm', price: 600 },
-  { id: 'maths-y6',          subject: 'Maths', subjectLabel: 'Maths',   yearLevel: 6,  title: 'Year 6 Maths',                 day: 'Wed', startMin: t(18, 0), endMin: t(19, 30), timeLabel: '6:00pm – 7:30pm', price: 600 },
-  { id: 'maths-y7',          subject: 'Maths', subjectLabel: 'Maths',   yearLevel: 7,  title: 'Year 7 Maths',                 day: 'Mon', startMin: t(18, 30), endMin: t(20, 0), timeLabel: '6:30pm – 8:00pm', price: 600 },
-  { id: 'maths-y8-online',   subject: 'Maths', subjectLabel: 'Maths',   yearLevel: 8,  title: 'Year 8 Maths',                 day: 'Tue', startMin: t(17, 30), endMin: t(19, 0), timeLabel: '5:30pm – 7:00pm', price: 550, mode: 'Online' },
-  { id: 'maths-y8-inperson', subject: 'Maths', subjectLabel: 'Maths',   yearLevel: 8,  title: 'Year 8 Maths',                 day: 'Mon', startMin: t(16, 30), endMin: t(18, 0), timeLabel: '4:30pm – 6:00pm', price: 600, mode: 'In Person' },
-  { id: 'maths-y9',          subject: 'Maths', subjectLabel: 'Maths',   yearLevel: 9,  title: 'Year 9 Maths',                 day: 'Mon', startMin: t(16, 30), endMin: t(18, 0), timeLabel: '4:30pm – 6:00pm', price: 650 },
-  { id: 'maths-y10',         subject: 'Maths', subjectLabel: 'Maths',   yearLevel: 10, title: 'Year 10 Maths',                day: 'Wed', startMin: t(18, 30), endMin: t(20, 0), timeLabel: '6:30pm – 8:00pm', price: 650 },
-  { id: 'maths-y11-std',     subject: 'Maths', subjectLabel: 'Maths',   yearLevel: 11, title: 'Year 11 Maths Standard', level: 'Standard', day: 'Mon', startMin: t(18, 0), endMin: t(20, 0), timeLabel: '6:00pm – 8:00pm', price: 880 },
-  { id: 'maths-y11-adv',     subject: 'Maths', subjectLabel: 'Maths',   yearLevel: 11, title: 'Year 11 Maths Advanced', level: 'Advanced', day: 'Mon', startMin: t(18, 0), endMin: t(20, 0), timeLabel: '6:00pm – 8:00pm', price: 880 },
-  { id: 'maths-y11-ext1',    subject: 'Maths', subjectLabel: 'Maths',   yearLevel: 11, title: 'Year 11 Maths Ext 1',     level: 'Ext 1',    day: 'Tue', startMin: t(18, 0), endMin: t(20, 0), timeLabel: '6:00pm – 8:00pm', price: 880 },
-  { id: 'maths-y12-std',     subject: 'Maths', subjectLabel: 'Maths',   yearLevel: 12, title: 'Year 12 Maths Standard', level: 'Standard', day: 'Wed', startMin: t(18, 0), endMin: t(20, 0), timeLabel: '6:00pm – 8:00pm', price: 900 },
-  { id: 'maths-y12-adv',     subject: 'Maths', subjectLabel: 'Maths',   yearLevel: 12, title: 'Year 12 Maths Advanced', level: 'Advanced', day: 'Fri', startMin: t(18, 0), endMin: t(20, 0), timeLabel: '6:00pm – 8:00pm', price: 900 },
-  { id: 'maths-y12-ext1',    subject: 'Maths', subjectLabel: 'Maths',   yearLevel: 12, title: 'Year 12 Maths Ext 1',     level: 'Ext 1',    day: 'Fri', startMin: t(18, 0), endMin: t(20, 0), timeLabel: '6:00pm – 8:00pm', price: 1150 },
-  { id: 'maths-y12-ext2',    subject: 'Maths', subjectLabel: 'Maths',   yearLevel: 12, title: 'Year 12 Maths Ext 2',     level: 'Ext 2',    day: 'Thu', startMin: t(18, 0), endMin: t(20, 0), timeLabel: '6:00pm – 8:00pm', price: 1150 },
+  { id: 'c-613',             subject: 'Maths', subjectLabel: 'Maths',   yearLevel: 5,  title: 'Year 5 Maths',                 day: 'Sat', startMin: t(15, 0), endMin: t(16, 30), timeLabel: '3:00pm – 4:30pm', price: 600 },
+  { id: 'c-636',             subject: 'Maths', subjectLabel: 'Maths',   yearLevel: 6,  title: 'Year 6 Maths',                 day: 'Sat', startMin: t(15, 0), endMin: t(16, 30), timeLabel: '3:00pm – 4:30pm', price: 600 },
+  { id: 'c-624',             subject: 'Maths', subjectLabel: 'Maths',   yearLevel: 8,  title: 'Year 8 Maths',                 day: 'Mon', startMin: t(16, 30), endMin: t(18, 0), timeLabel: '4:30pm – 6:00pm', price: 600 },
+  { id: 'c-628',             subject: 'Maths', subjectLabel: 'Maths',   yearLevel: 9,  title: 'Year 9 Maths',                 day: 'Mon', startMin: t(16, 30), endMin: t(18, 0), timeLabel: '4:30pm – 6:00pm', price: 650 },
+  { id: 'c-637',             subject: 'Maths', subjectLabel: 'Maths',   yearLevel: 9,  title: 'Year 9 Maths',                 day: 'Fri', startMin: t(18, 0), endMin: t(19, 30), timeLabel: '6:00pm – 7:30pm', price: 650 },
+  { id: 'c-600',             subject: 'Maths', subjectLabel: 'Maths',   yearLevel: 10, title: 'Year 10 Maths',                day: 'Wed', startMin: t(18, 30), endMin: t(20, 0), timeLabel: '6:30pm – 8:00pm', price: 650 },
+  { id: 'c-607',             subject: 'Maths', subjectLabel: 'Maths',   yearLevel: 11, title: 'Year 11 Ext 1 Maths',     level: 'Ext 1',    day: 'Tue', startMin: t(18, 0), endMin: t(20, 0), timeLabel: '6:00pm – 8:00pm', price: 880 },
 
   // ── English ─────────────────────────────────────────────────────────────
-  { id: 'english-y5',        subject: 'English', subjectLabel: 'English', yearLevel: 5,  title: 'Year 5 English',               day: 'Sat', startMin: t(13, 0), endMin: t(14, 30), timeLabel: '1:00pm – 2:30pm', price: 600 },
-  { id: 'english-y6a',       subject: 'English', subjectLabel: 'English', yearLevel: 6,  title: 'Year 6 English (Stream A)',    day: 'Wed', startMin: t(16, 0), endMin: t(17, 30), timeLabel: '4:00pm – 5:30pm', price: 600 },
-  { id: 'english-y6b',       subject: 'English', subjectLabel: 'English', yearLevel: 6,  title: 'Year 6 English (Stream B)',    day: 'Sat', startMin: t(16, 15), endMin: t(17, 45), timeLabel: '4:15pm – 5:45pm', price: 600 },
-  { id: 'english-y7',        subject: 'English', subjectLabel: 'English', yearLevel: 7,  title: 'Year 7 English',               day: 'Tue', startMin: t(18, 30), endMin: t(20, 0), timeLabel: '6:30pm – 8:00pm', price: 600 },
-  { id: 'english-y8',        subject: 'English', subjectLabel: 'English', yearLevel: 8,  title: 'Year 8 English',               day: 'Tue', startMin: t(17, 0), endMin: t(18, 30), timeLabel: '5:00pm – 6:30pm', price: 600 },
-  { id: 'english-y9',        subject: 'English', subjectLabel: 'English', yearLevel: 9,  title: 'Year 9 English',               day: 'Sat', startMin: t(11, 0), endMin: t(12, 30), timeLabel: '11:00am – 12:30pm', price: 650 },
-  { id: 'english-y10',       subject: 'English', subjectLabel: 'English', yearLevel: 10, title: 'Year 10 English',              day: 'Wed', startMin: t(16, 45), endMin: t(18, 15), timeLabel: '4:45pm – 6:15pm', price: 650 },
-  { id: 'english-y11-eald',  subject: 'English', subjectLabel: 'English', yearLevel: 11, title: 'Year 11 English EALD',    level: 'EALD',     day: 'Sat', startMin: t(14, 30), endMin: t(16, 0), timeLabel: '2:30pm – 4:00pm', price: 700 },
-  { id: 'english-y11-adv',   subject: 'English', subjectLabel: 'English', yearLevel: 11, title: 'Year 11 English Advanced', level: 'Advanced', day: 'Wed', startMin: t(18, 0), endMin: t(20, 0), timeLabel: '6:00pm – 8:00pm', price: 880 },
-  { id: 'english-y12-adv',   subject: 'English', subjectLabel: 'English', yearLevel: 12, title: 'Year 12 English Advanced', level: 'Advanced', day: 'Mon', startMin: t(16, 30), endMin: t(18, 30), timeLabel: '4:30pm – 6:30pm', price: 900 },
+  { id: 'c-612',             subject: 'English', subjectLabel: 'English', yearLevel: 5,  title: 'Year 5 English',               day: 'Sat', startMin: t(13, 0), endMin: t(14, 30), timeLabel: '1:00pm – 2:30pm', price: 600 },
+  { id: 'c-615',             subject: 'English', subjectLabel: 'English', yearLevel: 6,  title: 'Year 6 English',               day: 'Wed', startMin: t(16, 0), endMin: t(17, 30), timeLabel: '4:00pm – 5:30pm', price: 600 },
+  { id: 'c-635',             subject: 'English', subjectLabel: 'English', yearLevel: 6,  title: 'Year 6 English',               day: 'Sat', startMin: t(13, 0), endMin: t(14, 30), timeLabel: '1:00pm – 2:30pm', price: 600 },
+  { id: 'c-614',             subject: 'English', subjectLabel: 'English', yearLevel: 6,  title: 'Year 6 English',               day: 'Sat', startMin: t(16, 15), endMin: t(17, 45), timeLabel: '4:15pm – 5:45pm', price: 600 },
+  { id: 'c-621',             subject: 'English', subjectLabel: 'English', yearLevel: 8,  title: 'Year 8 English',               day: 'Tue', startMin: t(17, 0), endMin: t(18, 30), timeLabel: '5:00pm – 6:30pm', price: 600 },
+  { id: 'c-626',             subject: 'English', subjectLabel: 'English', yearLevel: 9,  title: 'Year 9 English',               day: 'Sat', startMin: t(11, 0), endMin: t(12, 30), timeLabel: '11:00am – 12:30pm', price: 650 },
+  { id: 'c-599',             subject: 'English', subjectLabel: 'English', yearLevel: 10, title: 'Year 10 English',              day: 'Sat', startMin: t(10, 30), endMin: t(12, 0), timeLabel: '10:30am – 12:00pm', price: 650 },
+  { id: 'c-604',             subject: 'English', subjectLabel: 'English', yearLevel: 11, title: 'Year 11 EALD English',    level: 'EALD',     day: 'Sat', startMin: t(14, 30), endMin: t(15, 30), timeLabel: '2:30pm – 3:30pm' },
 
   // ── Science / Chemistry ─────────────────────────────────────────────────
-  { id: 'science-y10',       subject: 'Science', subjectLabel: 'Science',   yearLevel: 10, title: 'Year 10 Science',              day: 'Sat', startMin: t(15, 0), endMin: t(16, 30), timeLabel: '3:00pm – 4:30pm', price: 650 },
-  { id: 'chem-y11',          subject: 'Science', subjectLabel: 'Chemistry', yearLevel: 11, title: 'Year 11 Chemistry',            day: 'Fri', startMin: t(18, 0), endMin: t(20, 0), timeLabel: '6:00pm – 8:00pm', price: 880 },
-  { id: 'chem-y12',          subject: 'Science', subjectLabel: 'Chemistry', yearLevel: 12, title: 'Year 12 Chemistry',            day: 'Sat', startMin: t(11, 0), endMin: t(13, 0), timeLabel: '11:00am – 1:00pm', price: 1150 },
+  { id: 'c-602',             subject: 'Science', subjectLabel: 'Chemistry', yearLevel: 11, title: 'Year 11 Chemistry',            day: 'Wed', startMin: t(18, 0), endMin: t(20, 0), timeLabel: '6:00pm – 8:00pm', price: 880 },
 ]
 
 /** Time range shown on the grid (11:00am – 8:00pm) */
