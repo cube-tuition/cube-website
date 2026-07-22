@@ -45,7 +45,7 @@ export default function ContactPage() {
           <div>
             <p className="font-semibold text-cube-navy mb-2">🕐 Opening Hours</p>
             <p className="text-gray-600">Mon – Fri: 4:00pm – 8:00pm</p>
-            <p className="text-gray-600">Saturday: 10:00am – 5:00pm</p>
+            <p className="text-gray-600">Saturday: 11:00am – 6:00pm</p>
             <p className="text-gray-600">Sunday: Closed</p>
           </div>
         </div>
