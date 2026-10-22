@@ -32,7 +32,7 @@ export default function ContactPage() {
         <div className="space-y-6">
           <div>
             <p className="font-semibold text-cube-navy mb-1">📞 Phone</p>
-            <a href="tel:0405369682" className="text-cube-blue">0405 369 682</a>
+            <a href="tel:0495044639" className="text-cube-blue">0495 044 639</a>
           </div>
           <div>
             <p className="font-semibold text-cube-navy mb-1">✉️ Email</p>

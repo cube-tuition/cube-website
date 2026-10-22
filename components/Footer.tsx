@@ -88,10 +88,10 @@ export default function Footer() {
                   admin@cubetuition.com.au
                 </a>
                 <a
-                  href="tel:0405369682"
+                  href="tel:0495044639"
                   className="text-[#DCE5FF]/80 hover:text-white transition tabular-nums"
                 >
-                  0405 369 682
+                  0495 044 639
                 </a>
                 <p className="text-[#DCE5FF]/60">
                   Level 6, 2 Help Street<br />
